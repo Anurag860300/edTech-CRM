@@ -1,0 +1,15 @@
+{
+  "name": "edtech-crm-assessment",
+  "version": "1.0.0",
+  "description": "EdTech CRM & Inquiry System - Full Stack Assessment",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "seed": "cd backend && npm run seed"
+  },
+  "keywords": ["edtech", "crm", "supabase", "react", "express", "jwt"],
+  "author": "",
+  "license": "ISC"
+}
