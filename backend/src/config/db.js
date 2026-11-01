@@ -2,7 +2,19 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 // Determine connection parameters
-const connectionString = process.env.DATABASE_URL;
+let connectionString = process.env.DATABASE_URL;
+
+// Verified IPv4 Supabase Connection Pooler (prevents ENETUNREACH on Render / IPv4 hosts)
+const IPV4_POOLER_URL = 'postgresql://postgres.cvchakitmwgsuqhttiaz:Anurag%401612@aws-0-eu-west-1.pooler.supabase.com:6543/postgres';
+
+if (!connectionString || connectionString.includes('YOUR_SUPABASE') || connectionString.includes('[YOUR-PASSWORD]')) {
+  connectionString = IPV4_POOLER_URL;
+} else if (connectionString.includes('db.cvchakitmwgsuqhttiaz.supabase.co')) {
+  // Direct host is IPv6-only. Rewrite dynamically to IPv4 Supabase Pooler
+  connectionString = connectionString
+    .replace('postgresql://postgres:', 'postgresql://postgres.cvchakitmwgsuqhttiaz:')
+    .replace('db.cvchakitmwgsuqhttiaz.supabase.co:5432', 'aws-0-eu-west-1.pooler.supabase.com:6543');
+}
 
 let poolConfig = {};
 
